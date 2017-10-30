@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang='en-US'>
+
+
+
+<head>
+
+
+<title>kceades: projects</title>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<link rel='stylesheet' href='styles/main.css'>
+<link rel='shortcut icon' type='image/x-icon' href='images/logo.png'>
+
+
+</head>
+
+
+
+<body>
+
+
+<div class='sidebar' role='navigation'>
+
+<h3>Kevin Caleb Eades</h3>
+
+<a href='index.html'>Home</a>
+<a href='projects.html' class='selected'>Projects</a>
+<a href='games.html'>Games</a>
+<a href='blog.html'>Blog</a>
+<a href='writing.html'>Writing</a>
+<a href='about.html'>About Me</a>
+
+<div class='bottomcontainer'>
+<div class='socialcontainer'>
+<a class='social' href='https://github.com/kceades'><div class='hubimage'></div></a>
+</div>
+<div class='socialcontainer'>
+<a class='social' href='https://www.linkedin.com/in/kceades'><div class='inimage'></div></a>
+</div>
+</div>
+
+</div>
+
+
+<div class='content'>
+
+
+<h1>Cool Projects and Other Random Things!</h1>
+
+<a href='https://github.com/kceades/public_sne_project'>
+<div class='preview'>
+<h2>Public Supernova Project</h2>
+<p>This is my current research project, where I am taking all the available public supernova spectral data and creating a model for spectra as a function of phase. This is critical in minimizing the intrinsic dispersion between these "standard candles", in order to provide a better map of our expansion history and hopefully pin down the dark matter equation of state.</p>
+<p>This project involved:
+<ul>
+<li>Web scraping</li>
+<li>Cleaning/normalizing a large data set with lots of variation</li>
+<li>Data reduction (expectation-maximization factor analysis and principle component analysis)</li>
+<li>Machine learning (side-project of building a phase classifier/predictor using the known data)</li>
+<li>And more!</li>
+</ul>
+</p>
+<p>This is also the first project where I really emphasized using robust, scalable, object-oriented coding practices so that with the large amount of data processing and I/O operations, I don't find myself bogged down in impromptu 20 minute breaks.</p>
+<p>So take a look around at some of the code. Note that some of them link to files that are not on my Github publicly because they contain propriety information (this is novel science after all). However, you should be able to get a decent idea of my coding abilities (in Python specifically for data science).</p>
+<p>For specific examples, check out snmcgen.py, base.py, phasennclassifier.py (which will assuredly get renamed...) and datacreator.py</p>
+</div>
+</a>
+
+<a href='https://github.com/kceades/ugrad_thesis'>
+<div class='preview'>
+<h2>Undergrad Thesis: Fusion Research</h2>
+<p>For my undergraduate research, I worked on the timing mechanism for delivering polystyrene nanospheres to the micron-scale focus of a terawatt, femtosecond chrip pulsed laser. That's quite a mouthful, but I'll break it down a little bit here.</p>
+<p>First, we deposit polystyrene nanospheres on a silicon substrate (which it turns out is a whole research project by itself to get right) to get hexagonal close packing. Then, we ablate the silicon with a pulsed laser to knock the spheres off into space with some distribution. These spheres then fly outwards in a rough cone and we time the big terawatt laser with the ablation one so that ideally it interacts with one or more of the spheres. When the big laser does interact, multipass stochastic heating could take place, which is a proposed mechanism for heating a plasma to induce a Coloumb explosion and generate fusion.</p>
+<p>So now that I've given a bit of background, here's what I did specifically:
+<ul>
+<li>Developed and fine-tuned the deposition technique</li>
+<li>Setup, conducted and analyzed the results for the time-of-flight experiment (this ensured ideal timing for the fusion experiment so we don't waste valuable laser shots).</li>
+<li>Wrote a bunch of Matlab code for several things: 1) the data processing and analysis, 2) a Monte Carlo and probabilistic simulation of the ablation and subsequent sphere flights. (This was crucial to allow transfering our process across different setups without wasting months repeating the time-of-flight experiment for every new set of parameters.)</li>
+</ul>
+</p>
+<p>If you want to read more about this experiment and see pretty pictures, look at the thesis pdf on the repo. If you want to check out the code, navigate to the appropriate subfolder. Be warned that this code was very much get results now oriented and may or may not be fully commented. On the flip side, it makes a lot of cool pictures and there's a sweet GUI that I built! Oh lastly, if for some reason you actually want to run the code, there is a section of my thesis that explains it rather thoroughly.</p>
+</div>
+</a>
+
+<a href='http://physics7b.atspace.cc/'>
+<div class='preview'>
+<h2>Physics 7B Teaching Website</h2>
+<p>This is a little website I built more just for a file repository than anything. I have been a GSI at UC Berkeley since Fall 2016 teaching Physics 7B (Thermodynamics, Electricity and Magnetism) and Physics 7A (Mechanics). As a GSI, I lead two discussion sections that each meet twice a week for two hours each time; so eight hours a week of face-to-face time.</p>
+<p>Anyways, it's not much to look at (I didn't put much effort/care into the styling there), but has some cool physics things on it and I wrote an auto-builer in Python to make things simpler for me. It's not super scalable to other website creation at the moment, but I might work on it eventually. Check out my github's physics7b repo for the code!</p>
+</div>
+</a>
+
+<a href='http://calebsphysics7a.atspace.cc/'>
+<div class='preview'>
+<h2>Physics 7A Teaching Website</h2>
+<p>If you thought my 7B website was something, just wait until this one! Haha, this one is literally just a repository. So really only look if you're interested in the physics (mechanics).</p>
+</div>
+</a>
+
+<a href='http://www.physics.hmc.edu/~donlab/'>
+<div class='preview'>
+<h2>Undergrad Lab Group Website: DonLabs!</h2>
+<p>On the theme of website building, here's the first one I ever fully built. I did it for my undergrad research group. Note that I pretty much just wrote the html and css code while a fellow group member did the photoshop images and overall design colors.</p>
+</div>
+</a>
+
+
+</div>
+
+
+</body>
+
+
+
+</html>

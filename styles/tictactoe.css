@@ -1,0 +1,188 @@
+html {
+	width: 100%;
+	height: 100%;
+	min-width: 26cm;
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+	background-color: #ffccf2;
+}
+
+body {
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+	width: 24cm;
+	margin: 0.5cm auto;
+	padding: 0.5cm 0;
+	background-color: #330026;
+	border-radius: 2cm;
+}
+
+h1 {
+	font-size: 20pt;
+	margin: 0;
+	color: white;
+	text-align: center;
+}
+
+p {
+	font-size: 14pt;
+	font-weight: normal;
+	margin: 0.25cm 1cm;
+	color: #e6e6e6;
+}
+
+.gameoptions {
+	width: 20cm;
+	margin: 0.5cm auto;
+	background-color: #ccfbff;
+	padding: 0;
+	border-radius: 0.5cm;
+	text-align: center;
+}
+
+.gameoptions .selected {
+	display: inline-block;
+	width: 40%;
+	margin: 0.25cm 5%;
+	padding: 0;
+	border-radius: 0.25cm;
+	background-color: #001a00;
+}
+
+.gameoptions .notselected {
+	display: inline-block;
+	width: 40%;
+	margin: 0.25cm 5%;
+	padding: 0;
+	border-radius: 0.25cm;
+	background-color: #00eaff;
+}
+
+.gameoptions .notselected p {
+	color: #002f33;
+	font-weight: bold;
+}
+
+.gameoptions .selected p {
+	color: white;
+	font-weight: bold;
+}
+
+
+.names {
+	width: 20cm;
+	margin: 0.5cm auto;
+	background-color: #002f33;
+	font-size: 0;
+	padding: 0;
+	border-radius: 0.5cm;
+}
+
+.names .nameblock {
+	display: inline-block;
+	width: 50%;
+	padding-bottom: 0.5cm;
+	margin: 0;
+	text-align: center;
+}
+
+.names .nameblock p {
+	color: #ccfbff;
+	font-size: 14pt;
+	margin: 0.25cm;
+	padding: 0;
+	padding-bottom: 0.1cm;
+	border-bottom: solid 2px white;
+}
+
+textarea {
+	height: 0.5cm;
+	width: 6cm;
+	resize: none;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12pt;
+}
+
+.turn {
+	font-size: 14pt;
+	background-color: #ccfbff;
+	width: 8cm;
+	padding-top: 0.2cm;
+	padding-bottom: 0.5cm;
+	margin: 0.5cm auto;
+	border-radius: 0.5cm;
+}
+
+.turn p {
+	color: #002f33;
+	text-align: center;
+	vertical-align: middle;
+	font-weight: bold;
+}
+
+.turn button.replay {
+	display: block;
+	width: 6cm;
+	margin-left: 1cm;
+	height: 1cm;
+	vertical-align: middle;
+	text-align: center;
+	background-color: #404040;
+	color: white;
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+.turn button.replay:active {
+	background-color: #666666;
+}
+
+.stats {
+	display: block;
+	width: 20cm;
+	margin: 0 auto;
+	padding: 0;
+	font-size: 0;
+	background-color: #002f33;
+}
+
+.stats .statblock {
+	display: inline-block;
+	width: 5cm;
+	height: 100%;
+	background-color: #002f33;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.stats .statblock p {
+	color: #ccfbff;
+	margin: 0.1cm 0;
+	font-size: 14pt;
+	font-weight: normal;
+}
+
+.gameboard {
+	background-color: #ccfbff;
+	width: 10cm;
+	margin: 0.5cm auto;
+	padding: 0.5cm;
+	border-radius: 0.5cm;
+}
+
+.gameboard .row {
+	width: 300px;
+	height: 100px;
+	margin: 0 auto;
+}
+
+.gameboard canvas.square {
+	background-color: white;
+	outline: black 5px solid;
+	height: 100px;
+	width: 100px;
+}

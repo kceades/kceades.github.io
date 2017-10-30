@@ -1,0 +1,185 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	font-family: Sans-Serif;
+}
+
+.sidebar {
+	background-color: #0d6c8c;
+	display: block;
+	color: white;
+	visibility: visible;
+	width: 25%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	position: fixed;
+}
+
+.sidebar h3 {
+	margin: 50px 0;
+	font-size: 20pt;
+	color: white;
+	text-align: center;
+}
+
+.sidebar a {
+	display: block;
+	color: #bfbfbf;
+	text-decoration: none;
+	font-weight: bold;
+	margin: 15px 10px;
+	padding: 5px;
+	font-size: 15pt;
+}
+
+.sidebar a.selected {
+	color: white;
+}
+
+.sidebar a:hover {
+	color: white;
+}
+
+.sidebar .bottomcontainer {
+	position: absolute;
+	bottom: 50px;
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.sidebar .bottomcontainer .socialcontainer {
+	display: inline-block;
+	vertical-align: top;
+	height: 50px;
+	width: 50%;
+	margin: 0;
+	padding: 0;
+}
+
+.sidebar .bottomcontainer .socialcontainer a.social {
+	display: block;
+	height: 50px;
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.sidebar .socialcontainer a.social .hubimage {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	height: 45px;
+	width: 45px;
+	-webkit-mask-box-image: url('../images/GitHub-Mark-Light-64px.png');
+	background-color: white;
+}
+
+.sidebar .socialcontainer a.social .inimage {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	height: 45px;
+	width: calc(45px*7/6);
+	-webkit-mask-box-image: url('../images/In-White-66px-R.png');
+	background-color: white;
+}
+
+.sidebar .socialcontainer a.social:hover .hubimage {
+	background-color: black;
+}
+
+.sidebar .socialcontainer a.social:hover .inimage {
+	background-color: black;
+}
+
+.content {
+	margin: 0;
+	margin-left: 25%;
+	padding: 0;
+	display: inline-block;
+	font-size: 12pt;
+}
+
+.content h1 {
+	margin: 0;
+	padding: 15px;
+	text-align: center;
+}
+
+.content a {
+	text-decoration: none;
+	color: black;
+	display: block;
+}
+
+.content p {
+	padding: 15px;
+}
+
+.content a.normal {
+	text-decoration: underline;
+	color: blue;
+	display: inline;
+}
+
+.content a.normal:hover {
+	color: green;
+}
+
+.content a:hover {
+	background-color: #bfbfbf;
+}
+
+.content .preview {
+	padding: 15px;
+	display: block;
+	width: 100%;
+}
+
+.content .preview h1 {
+	margin: 0;
+	padding: 10px;
+	text-align: center;
+	font-style: italic;
+}
+
+.content .preview h2 {
+	font-style: italic;
+}
+
+.content .preview p {
+	margin: 0;
+	padding: 10px;
+	text-align: justify;
+}
+
+@media screen and (min-width: 1000px) /* Desktop */ {
+
+}
+
+@media screen and (max-width: 1000px) /* Tablet */ {
+
+}
+
+@media screen and (max-width: 500px) /* Mobile */ {
+
+}
