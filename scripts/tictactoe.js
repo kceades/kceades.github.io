@@ -1,7 +1,6 @@
 var player_turn = 1;
 var num_moves = 0;
 var board = [[0,0,0],[0,0,0],[0,0,0]];
-var fboard = [[0,0,0],[0,0,0],[0,0,0]];
 var player1_name = 'Player 1';
 var player2_name = 'Player 2';
 // variable for the game status with:
@@ -12,6 +11,7 @@ var player1_wins = 0;
 var player2_wins = 0;
 var draws = 0;
 var games_played = 0;
+var ply = 9;
 
 $('#player1').on('change keydown paste input', function(){
 	player1_name = $('#player1').val();
@@ -26,10 +26,10 @@ $('#player1').on('change keydown paste input', function(){
 
 $('#player2').on('change keydown paste input', function(){
 	player2_name = $('#player2').val();
-	$('#stat2name').html(player2_name.concat("'s Wins"));
 	if (player2_name=='') {
 		player2_name = 'Player 2';
 	}
+	$('#stat2name').html(player2_name.concat("'s Wins"));
 	if (player_turn==2) {
 		$('#whosturn').html(player2_name.concat("'s turn"));
 	}
@@ -46,7 +46,11 @@ $('#PvP').on('click',function() {
 		if ($('#name2').css('display')=='none') {
 			$('#name2').css('display','inline-block');
 		}
-		player2_name = 'Player 2';
+		player2_name = $('#player2').val();
+		if (player2_name=='') {
+			player2_name = 'Player 2';
+		}
+		$('#stat2name').html(player2_name.concat("'s Wins"));
 	}
 });
 
@@ -88,7 +92,8 @@ function runGame() {
 				updateGame(row,col,1,turn_box);
 				if (game_status==0) {
 					if ($('#PvE').hasClass('selected')) {
-						var AI_move = calcAiMove();
+						var moves_to_play = Math.min(ply,9-num_moves);
+						var AI_move = calcAiMove(2,board,moves_to_play);
 						var box_id = 'box'.concat(String(AI_move[0]),
 							String(AI_move[1]));
 						var ai_canvas_object = document.getElementById(box_id);
@@ -136,42 +141,132 @@ function drawO(c_ctx) {
 	c_ctx.stroke();
 }
 
-function evalBoard(cboard) {
-	var row_check = checkRows(cboard);
-	if (row_check[0]!=0) {
-		return row_check[0];
-	}
-	var col_check = checkCols(cboard);
-	
-}
-
-function checkRows(cboard) {
-	var victor = 0;
-	var winrow = 0;
-	for (i = 0; i < 3; i++) {
-		if (cboard[0][i]==cboard[1][i] && cboard[1][i]==cboard[2][i]) {
-			victor = cboard[0][i];
-			winrow = i;
+function calcAiMove(player,cboard,moves_left) {
+	var possible_moves = openMoves(cboard);
+	var adjusted_ply = Math.min(ply,9-num_moves);
+	if (moves_left==adjusted_ply) {
+		var further_moves = []
+		var i=0;
+		for (i=0;i<possible_moves.length;i++) {
+			var move = possible_moves[i];
+			var new_board = cboard.map(function(arr) {
+				return arr.slice();
+			});
+			new_board[move[0]][move[1]] = player;
+			var result = evaluateBoard(new_board);
+			if (result==2) {
+				return move;
+			} else {
+				var next_score = calcAiMove(1,new_board,moves_left-1);
+				if (next_score!=-100) {
+					further_moves.push([next_score,move]);
+				}
+			}
+		}
+		if (further_moves.length==0) {
+			return possible_moves[0];
+		} else {
+			further_moves = further_moves.sort(function(a,b) {
+				return b[0]-a[0];
+			});
+			console.log(further_moves)
+			return further_moves[0][1];
+		}
+	} else if (moves_left==0) {
+		return 0;
+	} else {
+		var i=0;
+		var next_scores = []
+		for (i=0;i<possible_moves.length;i++) {
+			var move = possible_moves[i];
+			var new_board = cboard.map(function(arr) {
+				return arr.slice();
+			});
+			new_board[move[0]][move[1]] = player;
+			var result = evaluateBoard(new_board);
+			if (result==2) {
+				return 100*moves_left/adjusted_ply;
+			} else if (result==1) {
+				return -100*moves_left/adjusted_ply;
+			} else {
+				var next_score = 0;
+				if (player==1) {
+					next_score = calcAiMove(2,new_board,moves_left-1);
+				} else {
+					next_score = calcAiMove(1,new_board,moves_left-1);
+				}
+				next_scores.push(next_score)
+			}
+		}
+		var min_next = Math.min.apply(null,next_scores);
+		var max_next = Math.max.apply(null,next_scores);
+		if (max_next>(-1*min_next)) {
+			return max_next;
+		} else {
+			return min_next;
 		}
 	}
-	return [victor,winrow];
+}
+
+function openMoves(cboard) {
+	var return_moves = [];
+	var i=0;
+	var j=0;
+	for (i=0;i<3;i++) {
+		for (j=0;j<3;j++) {
+			if (cboard[i][j]==0) {
+				return_moves.push([i,j]);
+			}
+		}
+	}
+	return return_moves;
+}
+
+function evaluateBoard(cboard) {
+	var row_check = checkRows(cboard);
+	if (row_check!=0) {
+		return row_check;
+	}
+	var col_check = checkCols(cboard);
+	if (col_check!=0) {
+		return col_check;
+	}
+	var main_diag_check = checkMainDiagonal(cboard);
+	if (main_diag_check!=0) {
+		return main_diag_check;
+	}
+	var off_diag_check = checkOffDiagonal(cboard);
+	if (off_diag_check!=0) {
+		return off_diag_check;
+	}
+	return 0;
 }
 
 function checkCols(cboard) {
 	var victor = 0;
-	var wincol = 0;
+	var i=0;
 	for (i = 0; i < 3; i++) {
-		if (cboard[i][0]==cboard[i][1] && cboard[i][1]==cboard[i][2]) {
-			victor = cboard[i][0];
-			wincol = i;
+		if (cboard[0][i]==cboard[1][i] && cboard[1][i]==cboard[2][i] && cboard[0][i]!=0) {
+			victor = cboard[0][i];
 		}
 	}
-	return [victor,wincol];
+	return victor;
+}
+
+function checkRows(cboard) {
+	var victor = 0;
+	var i=0;
+	for (i = 0; i < 3; i++) {
+		if (cboard[i][0]==cboard[i][1] && cboard[i][1]==cboard[i][2] && cboard[i][0]!=0) {
+			victor = cboard[i][0];
+		}
+	}
+	return victor;
 }
 
 function checkMainDiagonal(cboard) {
 	var victor = 0;
-	if (cboard[0][0]==cboard[1][1] && cboard[1][1]==cboard[2][2]) {
+	if (cboard[0][0]==cboard[1][1] && cboard[1][1]==cboard[2][2] && cboard[0][0]!=0) {
 		victor = cboard[0][0];
 	}
 	return victor;
@@ -179,8 +274,8 @@ function checkMainDiagonal(cboard) {
 
 function checkOffDiagonal(cboard) {
 	var victor = 0;
-	if (cboard[0][0]==cboard[1][1] && cboard[1][1]==cboard[2][2]) {
-		victor = cboard[0][0];
+	if (cboard[2][0]==cboard[1][1] && cboard[1][1]==cboard[0][2] && cboard[2][0]!=0) {
+		victor = cboard[2][0];
 	}
 	return victor;
 }
@@ -188,9 +283,11 @@ function checkOffDiagonal(cboard) {
 function checkStatus() {
 	// Checking for a row victor or column victor
 	var victor = 0;
+	var i=0;
 	for (i = 0; i < 3; i++) {
 		if (board[i][0]==board[i][1] && board[i][1]==board[i][2] && board[i][0]!=0) {
 			victor = board[i][0];
+			var j=0;
 			for (j = 0; j < 3; j++) {
 				var canvas_object = document.querySelector('#box'.concat(String(i),String(j)));
 				canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
@@ -198,6 +295,7 @@ function checkStatus() {
 		}
 		if (board[0][i]==board[1][i] && board[1][i]==board[2][i] && board[0][i]!=0) {
 			victor = board[0][i];
+			var j=0;
 			for (j = 0; j < 3; j++) {
 				var canvas_object = document.querySelector('#box'.concat(String(j),String(i)));
 				canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
@@ -207,6 +305,7 @@ function checkStatus() {
 	// Checking for diagonal victor
 	if (board[0][0]==board[1][1] && board[1][1]==board[2][2] && board[0][0]!=0) {
 		victor = board[0][0];
+		var j=0;
 		for (j = 0; j < 3; j++) {
 			var canvas_object = document.querySelector('#box'.concat(String(j),String(j)));
 			canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
@@ -214,6 +313,7 @@ function checkStatus() {
 	}
 	if (board[2][0]==board[1][1] && board[1][1]==board[0][2] && board[2][0]!=0) {
 		victor = board[2][0];
+		var j=0;
 		for (j = 0; j < 3; j++) {
 			var canvas_object = document.querySelector('#box'.concat(String(2-j),String(j)));
 			canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
@@ -255,6 +355,8 @@ function updateStats() {
 function resetGame() {
 	var replay_button = document.querySelector('.replay');
 	replay_button.innerHTML= 'Reset';
+	var i=0;
+	var j=0;
 	for (i=0; i<3; i++) {
 		for (j=0; j<3; j++) {
 			cid = 'box'.concat(String(i),String(j))

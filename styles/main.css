@@ -181,5 +181,60 @@ body {
 }
 
 @media screen and (max-width: 500px) /* Mobile */ {
+	.sidebar h3 {
+		margin: 5px 0;
+		font-size: 16pt;
+	}
 
+	.sidebar a {
+		font-size: 12pt;
+		margin: 15px 5px;
+		padding: 0;
+	}
+
+	.content h1 {
+		font-size: 14pt;
+		padding: 5px;
+	}
+
+	.content h2 {
+		font-size: 12pt;
+	}
+
+	.content p {
+		font-size: 10pt;
+		padding: 5px;
+	}
+
+	.content ul li {
+		font-size: 10pt;
+	}
+
+	.content .preview {
+		padding: 5px;
+	}
+
+	.content .preview h1 {
+		font-size: 14pt;
+		padding: 5px;
+	}
+
+	.content .preview p {
+		font-size: 10pt;
+		padding: 5px;
+	}
+
+	.sidebar .bottomcontainer {
+		bottom: 25px;
+	}
+
+	.sidebar .socialcontainer a.social .hubimage {
+		height: 25px;
+		width: 25px;
+	}
+
+	.sidebar .socialcontainer a.social .inimage {
+		height: 25px;
+		width: calc(25px*7/6);
+	}
 }
