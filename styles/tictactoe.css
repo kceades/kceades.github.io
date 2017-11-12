@@ -51,6 +51,37 @@ p {
 	line-height: 130%;
 }
 
+.plyoptions {
+	width: 50%;
+	margin: 0 auto;
+	background-color: white;
+	color: black;
+	padding: 0.05cm 0;
+}
+
+.plyoptions p {
+	display: inline-block;
+	width: 50%;
+	font-weight: bold;
+	padding: 0;
+	margin: 0.05cm 0;
+	font-size: 14pt;
+	text-align: right;
+}
+
+
+.plyoptions .selectcontainer {
+	display: inline-block;
+	width: 50%;
+	text-align: left;
+	padding-left: 6px;
+}
+
+.plyoptions select {
+	margin: 0.05cm 0;
+	font-size: 14pt;
+}
+
 .gameoptions {
 	width: 100%;
 	margin: 0 auto;

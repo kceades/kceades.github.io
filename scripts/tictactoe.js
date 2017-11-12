@@ -12,6 +12,15 @@ var player2_wins = 0;
 var draws = 0;
 var games_played = 0;
 var ply = 9;
+var green = 'rgba(0,255,0,0.5)';
+var red = 'rgba(255,0,0,0.5)';
+var blue = 'rgba(0,0,255,0.5)';
+var victor_color = [blue,green,red];
+
+$('#ailevel').on('change',function(){
+	ply = parseInt($('#ailevel').val());
+	console.log(ply)
+});
 
 $('#player1').on('change keydown paste input', function(){
 	player1_name = $('#player1').val();
@@ -63,7 +72,7 @@ $('#PvE').on('click',function() {
 		$('#PvP').removeClass('selected');
 		$('#PvP').addClass('notselected');
 		$('#name2').css('display','none');
-		player2_name = 'The evil AI';
+		player2_name = 'The AI';
 		$('#stat2name').html(player2_name.concat("'s Wins"))
 	}
 });
@@ -157,10 +166,7 @@ function calcAiMove(player,cboard,moves_left) {
 			if (result==2) {
 				return move;
 			} else {
-				var next_score = calcAiMove(1,new_board,moves_left-1);
-				if (next_score!=-100) {
-					further_moves.push([next_score,move]);
-				}
+				further_moves.push([calcAiMove(1,new_board,moves_left-1),move]);
 			}
 		}
 		if (further_moves.length==0) {
@@ -169,7 +175,6 @@ function calcAiMove(player,cboard,moves_left) {
 			further_moves = further_moves.sort(function(a,b) {
 				return b[0]-a[0];
 			});
-			console.log(further_moves)
 			return further_moves[0][1];
 		}
 	} else if (moves_left==0) {
@@ -198,12 +203,12 @@ function calcAiMove(player,cboard,moves_left) {
 				next_scores.push(next_score)
 			}
 		}
-		var min_next = Math.min.apply(null,next_scores);
-		var max_next = Math.max.apply(null,next_scores);
-		if (max_next>(-1*min_next)) {
-			return max_next;
+		var max_score = Math.max.apply(null,next_scores);
+		var min_score = Math.min.apply(null,next_scores);
+		if (player==1) {
+			return min_score;
 		} else {
-			return min_next;
+			return max_score;
 		}
 	}
 }
@@ -290,7 +295,7 @@ function checkStatus() {
 			var j=0;
 			for (j = 0; j < 3; j++) {
 				var canvas_object = document.querySelector('#box'.concat(String(i),String(j)));
-				canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
+				canvas_object.style.backgroundColor = victor_color[victor];
 			}
 		}
 		if (board[0][i]==board[1][i] && board[1][i]==board[2][i] && board[0][i]!=0) {
@@ -298,7 +303,7 @@ function checkStatus() {
 			var j=0;
 			for (j = 0; j < 3; j++) {
 				var canvas_object = document.querySelector('#box'.concat(String(j),String(i)));
-				canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
+				canvas_object.style.backgroundColor = victor_color[victor];
 			}
 		}
 	}
@@ -308,7 +313,7 @@ function checkStatus() {
 		var j=0;
 		for (j = 0; j < 3; j++) {
 			var canvas_object = document.querySelector('#box'.concat(String(j),String(j)));
-			canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
+			canvas_object.style.backgroundColor = victor_color[victor];
 		}
 	}
 	if (board[2][0]==board[1][1] && board[1][1]==board[0][2] && board[2][0]!=0) {
@@ -316,7 +321,7 @@ function checkStatus() {
 		var j=0;
 		for (j = 0; j < 3; j++) {
 			var canvas_object = document.querySelector('#box'.concat(String(2-j),String(j)));
-			canvas_object.style.backgroundColor = 'rgba(0,255,0,0.5)';
+			canvas_object.style.backgroundColor = victor_color[victor];
 		}
 	}
 	if (victor==0 && num_moves==9) {

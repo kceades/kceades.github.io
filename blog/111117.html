@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang='en-US'>
+
+
+
+<head>
+
+
+<title>kceades: Quick Comments on JavaScript</title>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<link rel='stylesheet' href='../styles/story.css'>
+<link rel='shortcut icon' type='image/x-icon' href='../images/logo.png'>
+
+
+</head>
+
+
+
+<body>
+
+
+
+<p class='head'><a href='../blog.html'>Back to the Blog</a></p>
+
+
+<h1>November 11, 2017: Quick Comments on JavaScript</h1>
+
+<p>Over a couple hours of debugging and searching the interwebs for answers, I learned a few important things about JavaScript that I wouldn't have necessarily expected coming from mainly coding in Python. While I have also had C++ and Java experience several years ago, it'd been a while since writing anything in a language similar to this.</p>
+
+<h3>Lesson 1</h3>
+
+<p>Consider the following example. Set</p>
+
+<p>var x = [[0,1],[1,1],[2,7]];</p>
+
+<p>That is, let x be a variable that is a nested array. Now set</p>
+
+<p>var y = x;</p>
+
+<p>Here, JavaScript thinks you clearly just want to reference the memory location of x, so any changes you make to y, you also make to x. This is in contrast to Python, where it makes the seemingly more natural assumption that you want to just use the values and make a copy.</p>
+
+<p>The solution I found on the interwebs that worked for me is</p>
+
+<p>var y = x.map(function(arr) {return arr.slice();});</p>
+
+<h3>Lesson 2</h3>
+
+<p>You cannot simply pass an array to Math.min or Math.max. Instead, if x is a non-nested array, then use</p>
+
+<p>var max_x = Math.max.apply(null,x);</p>
+
+
+
+</body>
+
+
+
+</html>

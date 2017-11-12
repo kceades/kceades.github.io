@@ -44,9 +44,16 @@ h1 {
 
 }
 
+h3 {
+	font-weight: bold;
+	font-size: 18pt;
+	color: black;
+	text-align: left;
+	margin: 0.5cm 0 0.5cm 1cm;
+}
+
 p {
 	color: black;
-	font-style: italic;
 	font-size: 14pt;
 	text-align: justify;
 	margin: 0.25cm 0.5cm 0.25cm 0.5cm;
@@ -80,4 +87,5 @@ p.end {
 
 p.poem {
 	margin: 0.25cm 1.5cm;
+	font-style: italic;
 }
