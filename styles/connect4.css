@@ -1,0 +1,248 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+	background-color: white;
+}
+
+body {
+	font-size: 0;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	font-family: Sans-Serif;
+}
+
+p.head {
+	text-align: center;
+	margin: 0.1cm;
+}
+
+a {
+	font-size: 20pt;
+	font-weight: bold;
+	color: #000033;
+}
+
+a:hover {
+	color: #009900;
+}
+
+h1 {
+	font-size: 16pt;
+	margin: 20px 10px;
+	color: black;
+	text-align: center;
+}
+
+p {
+	font-size: 12pt;
+	font-weight: normal;
+	margin: 10px 15px;
+	color: black;
+	line-height: 130%;
+}
+
+.plyoptions {
+	width: 50%;
+	margin: 0 auto;
+	background-color: white;
+	color: black;
+	padding: 0.05cm 0;
+}
+
+.plyoptions p {
+	display: inline-block;
+	width: 50%;
+	font-weight: bold;
+	padding: 0;
+	margin: 0.05cm 0;
+	font-size: 14pt;
+	text-align: right;
+}
+
+
+.plyoptions .selectcontainer {
+	display: inline-block;
+	width: 50%;
+	text-align: left;
+	padding-left: 6px;
+}
+
+.plyoptions select {
+	margin: 0.05cm 0;
+	font-size: 14pt;
+}
+
+.gameoptions {
+	width: 100%;
+	margin: 0 auto;
+	background-color: white;
+	color: black;
+	padding: 0;
+	text-align: center;
+}
+
+.gameoptions .selected {
+	display: inline-block;
+	width: 40%;
+	margin: 10px 5%;
+	padding: 0;
+	background-color: #404040;
+	border-radius: 0.25cm;
+}
+
+.gameoptions .notselected {
+	display: inline-block;
+	width: 40%;
+	margin: 10px 5%;
+	padding: 0;
+	border-radius: 0.25cm;
+	background-color: #f2f2f2;
+}
+
+.gameoptions .notselected:hover {
+	background-color: #bfbfbf;
+}
+
+.gameoptions .notselected p {
+	color: black;
+	font-weight: bold;
+	padding: 0;
+	margin: 0.2cm auto;
+}
+
+.gameoptions .selected p {
+	color: white;
+	font-weight: bold;
+	padding: 0;
+	margin: 0.2cm auto;
+}
+
+
+.names {
+	margin: 0 auto;
+	width: 100%;
+	display: block;
+	font-size: 0;
+	padding: 0;
+}
+
+.names .nameblock {
+	display: inline-block;
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+	padding-bottom: 15px;
+	background-color: #bfbfbf;
+}
+
+.names .nameblock p {
+	color: block;
+	font-size: 16pt;
+	margin: 0.25cm;
+	padding: 0;
+}
+
+textarea {
+	height: 0.75cm;
+	width: 80%;
+	resize: none;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 12pt;
+}
+
+.turn {
+	font-size: 14pt;
+	background-color: #0d6c8c;
+	width: 100%;
+	padding-top: 0.2cm;
+	padding-bottom: 0.3cm;
+	margin: 0 auto;
+	display: block;
+}
+
+.turn p {
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+	font-weight: bold;
+	font-size: 16pt;
+	padding: 0;
+	margin: 0.1cm 0;
+}
+
+.turn button.replay {
+	display: block;
+	width: 60%;
+	margin: 0 auto;
+	height: 1cm;
+	vertical-align: middle;
+	text-align: center;
+	background-color: black;
+	color: white;
+	font-weight: bold;
+	font-size: 14pt;
+}
+
+.turn button.replay:active {
+	background-color: #666666;
+}
+
+.stats {
+	display: block;
+	width: 100%;
+	margin: 0.1 auto;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0;
+	font-size: 0;
+}
+
+.stats .statblock {
+	display: inline-block;
+	width: 25%;
+	height: 100%;
+	background-color: #073646;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.stats .statblock p {
+	color: white;
+	margin: 0.05cm 0;
+	font-size: 14pt;
+	font-weight: normal;
+}
+
+
+.gameboard {
+	display: block;
+	background-color: black;
+	width: 100%;
+	margin: 0;
+	padding: 0.5cm 0;
+}
+
+.gameboard .row {
+	width: 700px;
+	height: 100px;
+	margin: 0 auto;
+}
+
+.gameboard canvas.square {
+	background-color: white;
+	outline: black 5px solid;
+	height: 100px;
+	width: 100px;
+}

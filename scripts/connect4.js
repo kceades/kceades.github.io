@@ -1,6 +1,7 @@
 var player_turn = 1;
 var num_moves = 0;
-var board = [[0,0,0],[0,0,0],[0,0,0]];
+var board = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
 var player1_name = 'Player 1';
 var player2_name = 'Player 2';
 // variable for the game status with:
@@ -12,10 +13,12 @@ var player2_wins = 0;
 var draws = 0;
 var games_played = 0;
 var ply = 9;
-var green = 'rgba(0,255,0,0.5)';
 var red = 'rgba(255,0,0,0.5)';
+var light_red = 'rgba(255, 153, 194,0.9)'
 var blue = 'rgba(0,0,255,0.5)';
-var victor_color = [blue,green,red];
+var light_blue = 'rgba(153, 230, 255,0.9)';
+var victor_color = [0,light_blue,light_red];
+var player_color = [0,'blue','red'];
 
 $('#ailevel').on('change',function(){
 	ply = parseInt($('#ailevel').val());
@@ -89,33 +92,54 @@ function resetStats() {
 
 function runGame() {
 	var turn_box = document.querySelector('#whosturn');
-	var canvas_object = document.getElementById(this.id);
-	var ctx = canvas_object.getContext('2d');
 	var row = Number(this.id.charAt(3));
 	var col = Number(this.id.charAt(4));
 	if (game_status==0) {
-		if (board[row][col]==0) {
-			if (player_turn==1) {
-				drawX(ctx);
-				updateGame(row,col,1,turn_box);
-				if (game_status==0) {
-					if ($('#PvE').hasClass('selected')) {
-						var moves_to_play = Math.min(ply,9-num_moves);
-						var AI_move = calcAiMove(2,board,moves_to_play);
-						var box_id = 'box'.concat(String(AI_move[0]),
-							String(AI_move[1]));
-						var ai_canvas_object = document.getElementById(box_id);
-						var ai_ctx = ai_canvas_object.getContext('2d');
-						drawO(ai_ctx);
-						updateGame(AI_move[0],AI_move[1],2,turn_box);
-					}
+		var next_row = openRow(col,board);
+		if (next_row!=-1) {
+			var box_string = 'box'.concat(String(next_row).concat(String(col)));
+			var canvas_object = document.getElementById(box_string);
+			var ctx = canvas_object.getContext('2d');
+			drawCircle(ctx,player_turn);
+			updateGame(next_row,col,player_turn,turn_box);
+			if (game_status==0) {
+				if ($('#PvE').hasClass('selected')) {
+					var moves_to_play = Math.min(ply,42-num_moves);
+					var AI_move = calcAiMove(2,board,moves_to_play);
+					var box_id = 'box'.concat(String(AI_move[0]),
+						String(AI_move[1]));
+					var ai_canvas_object = document.getElementById(box_id);
+					var ai_ctx = ai_canvas_object.getContext('2d');
+					drawCircle(ai_ctx,2);
+					updateGame(AI_move[0],AI_move[1],2,turn_box);
 				}
-			} else {
-				drawO(ctx);
-				updateGame(row,col,2,turn_box);
 			}
 		}
 	}
+}
+
+function openRow(col,cboard) {
+	var return_row = -1;
+	var i = 0;
+	for (i=0;i<6;i++) {
+		if (cboard[i][col]==0) {
+			return_row = i;
+		}
+	}
+	return return_row;
+}
+
+function openMoves(cboard) {
+	var return_moves = [];
+	var current_row = 0;
+	var i=0;
+	for (i=0;i<7;i++) {
+		current_row = openRow(i,cboard);
+		if (current_row!=-1) {
+			return_moves.push([current_row,i]);
+		}
+	}
+	return return_moves;
 }
 
 function updateGame(row,col,player,turn_box_object) {
@@ -131,27 +155,19 @@ function updateGame(row,col,player,turn_box_object) {
 	checkStatus();
 }
 
-function drawX(c_ctx) {
-	c_ctx.beginPath()
-	c_ctx.lineWidth = 5;
-	c_ctx.moveTo(15,15);
-	c_ctx.lineTo(85,85);
-	c_ctx.stroke();
-	c_ctx.moveTo(15,85);
-	c_ctx.lineTo(85,15);
-	c_ctx.stroke();
-}
-
-function drawO(c_ctx) {
+function drawCircle(c_ctx,player) {
 	c_ctx.beginPath();
 	c_ctx.lineWidth = 5;
 	c_ctx.arc(50,50,35,0,2*Math.PI);
+	c_ctx.strokeStyle = player_color[player];
 	c_ctx.stroke();
+	c_ctx.fillStyle = player_color[player];
+	c_ctx.fill();
 }
 
 function calcAiMove(player,cboard,moves_left) {
 	var possible_moves = openMoves(cboard);
-	var adjusted_ply = Math.min(ply,9-num_moves);
+	var adjusted_ply = Math.min(ply,42-num_moves);
 	if (moves_left==adjusted_ply) {
 		var further_moves = []
 		var i=0;
@@ -212,20 +228,6 @@ function calcAiMove(player,cboard,moves_left) {
 	}
 }
 
-function openMoves(cboard) {
-	var return_moves = [];
-	var i=0;
-	var j=0;
-	for (i=0;i<3;i++) {
-		for (j=0;j<3;j++) {
-			if (cboard[i][j]==0) {
-				return_moves.push([i,j]);
-			}
-		}
-	}
-	return return_moves;
-}
-
 function evaluateBoard(cboard) {
 	var row_check = checkRows(cboard);
 	if (row_check!=0) {
@@ -249,9 +251,12 @@ function evaluateBoard(cboard) {
 function checkCols(cboard) {
 	var victor = 0;
 	var i=0;
-	for (i = 0; i < 3; i++) {
-		if (cboard[0][i]==cboard[1][i] && cboard[1][i]==cboard[2][i] && cboard[0][i]!=0) {
-			victor = cboard[0][i];
+	var j=0;
+	for (j=0;j<3;j++) {
+		for (i = 0; i < 7; i++) {
+			if (cboard[j][i]==cboard[j+1][i] && cboard[j+1][i]==cboard[j+2][i] && cboard[j+2][i]==cboard[j+3][i] && cboard[j][i]!=0) {
+				victor = cboard[j][i];
+			}
 		}
 	}
 	return victor;
@@ -260,9 +265,12 @@ function checkCols(cboard) {
 function checkRows(cboard) {
 	var victor = 0;
 	var i=0;
-	for (i = 0; i < 3; i++) {
-		if (cboard[i][0]==cboard[i][1] && cboard[i][1]==cboard[i][2] && cboard[i][0]!=0) {
-			victor = cboard[i][0];
+	var j=0;
+	for (i = 0; i < 6; i++) {
+		for (j=0;j<4;j++) {
+			if (cboard[i][j]==cboard[i][j+1] && cboard[i][j+1]==cboard[i][j+2] && cboard[i][j+2]==cboard[i][j+3] && cboard[i][j]!=0) {
+				victor = cboard[i][j];
+			}
 		}
 	}
 	return victor;
@@ -270,60 +278,36 @@ function checkRows(cboard) {
 
 function checkMainDiagonal(cboard) {
 	var victor = 0;
-	if (cboard[0][0]==cboard[1][1] && cboard[1][1]==cboard[2][2] && cboard[0][0]!=0) {
-		victor = cboard[0][0];
+	var i=0;
+	var j=0;
+	for (i=0;i<3;i++) {
+		for (j=0;j<4;j++) {
+			if (cboard[i][j]==cboard[i+1][j+1] && cboard[i+1][j+1]==cboard[i+2][j+2] && cboard[i+2][j+2]==cboard[i+3][j+3] && cboard[i][j]!=0) {
+				victor = cboard[i][j];
+			}
+		}
 	}
 	return victor;
 }
 
 function checkOffDiagonal(cboard) {
 	var victor = 0;
-	if (cboard[2][0]==cboard[1][1] && cboard[1][1]==cboard[0][2] && cboard[2][0]!=0) {
-		victor = cboard[2][0];
+	var i=0;
+	var j=0;
+	for (i=0;i<3;i++) {
+		for (j=0;j<4;j++) {
+			if (cboard[i+3][j]==cboard[i+2][j+1] && cboard[i+2][j+1]==cboard[i+1][j+2] && cboard[i+1][j+2]==cboard[i][j+3] && cboard[i+3][j]!=0) {
+				victor = cboard[i+3][j];
+			}
+		}
 	}
 	return victor;
 }
 
 function checkStatus() {
 	// Checking for a row victor or column victor
-	var victor = 0;
-	var i=0;
-	for (i = 0; i < 3; i++) {
-		if (board[i][0]==board[i][1] && board[i][1]==board[i][2] && board[i][0]!=0) {
-			victor = board[i][0];
-			var j=0;
-			for (j = 0; j < 3; j++) {
-				var canvas_object = document.querySelector('#box'.concat(String(i),String(j)));
-				canvas_object.style.backgroundColor = victor_color[victor];
-			}
-		}
-		if (board[0][i]==board[1][i] && board[1][i]==board[2][i] && board[0][i]!=0) {
-			victor = board[0][i];
-			var j=0;
-			for (j = 0; j < 3; j++) {
-				var canvas_object = document.querySelector('#box'.concat(String(j),String(i)));
-				canvas_object.style.backgroundColor = victor_color[victor];
-			}
-		}
-	}
-	// Checking for diagonal victor
-	if (board[0][0]==board[1][1] && board[1][1]==board[2][2] && board[0][0]!=0) {
-		victor = board[0][0];
-		var j=0;
-		for (j = 0; j < 3; j++) {
-			var canvas_object = document.querySelector('#box'.concat(String(j),String(j)));
-			canvas_object.style.backgroundColor = victor_color[victor];
-		}
-	}
-	if (board[2][0]==board[1][1] && board[1][1]==board[0][2] && board[2][0]!=0) {
-		victor = board[2][0];
-		var j=0;
-		for (j = 0; j < 3; j++) {
-			var canvas_object = document.querySelector('#box'.concat(String(2-j),String(j)));
-			canvas_object.style.backgroundColor = victor_color[victor];
-		}
-	}
-	if (victor==0 && num_moves==9) {
+	var victor = evaluateBoard(board);
+	if (victor==0 && num_moves==42) {
 		var turn_box = document.querySelector('#whosturn');
 		turn_box.innerHTML = "It's a draw.";
 		var replay_button = document.querySelector('.replay');
@@ -332,6 +316,15 @@ function checkStatus() {
 		updateStats();
 	} else {
 		if (victor!=0) {
+			var i=0;
+			var j=0;
+			for (i=0; i<6; i++) {
+				for (j=0; j<7; j++) {
+					cid = 'box'.concat(String(i),String(j))
+					var canvas_object = document.getElementById(cid);
+					canvas_object.style.backgroundColor = victor_color[victor];
+				}
+			}
 			var turn_box = document.querySelector('#whosturn');
 			if (victor==1) {
 				player1_wins++;
@@ -361,8 +354,8 @@ function resetGame() {
 	replay_button.innerHTML= 'Reset';
 	var i=0;
 	var j=0;
-	for (i=0; i<3; i++) {
-		for (j=0; j<3; j++) {
+	for (i=0; i<6; i++) {
+		for (j=0; j<7; j++) {
 			cid = 'box'.concat(String(i),String(j))
 			var canvas_object = document.getElementById(cid);
 			canvas_object.style.backgroundColor = 'white';
@@ -381,11 +374,44 @@ function resetGame() {
 document.getElementById('box00').addEventListener('click',runGame,false);
 document.getElementById('box01').addEventListener('click',runGame,false);
 document.getElementById('box02').addEventListener('click',runGame,false);
+document.getElementById('box03').addEventListener('click',runGame,false);
+document.getElementById('box04').addEventListener('click',runGame,false);
+document.getElementById('box05').addEventListener('click',runGame,false);
+document.getElementById('box06').addEventListener('click',runGame,false);
 document.getElementById('box10').addEventListener('click',runGame,false);
 document.getElementById('box11').addEventListener('click',runGame,false);
 document.getElementById('box12').addEventListener('click',runGame,false);
+document.getElementById('box13').addEventListener('click',runGame,false);
+document.getElementById('box14').addEventListener('click',runGame,false);
+document.getElementById('box15').addEventListener('click',runGame,false);
+document.getElementById('box16').addEventListener('click',runGame,false);
 document.getElementById('box20').addEventListener('click',runGame,false);
 document.getElementById('box21').addEventListener('click',runGame,false);
 document.getElementById('box22').addEventListener('click',runGame,false);
+document.getElementById('box23').addEventListener('click',runGame,false);
+document.getElementById('box24').addEventListener('click',runGame,false);
+document.getElementById('box25').addEventListener('click',runGame,false);
+document.getElementById('box26').addEventListener('click',runGame,false);
+document.getElementById('box30').addEventListener('click',runGame,false);
+document.getElementById('box31').addEventListener('click',runGame,false);
+document.getElementById('box32').addEventListener('click',runGame,false);
+document.getElementById('box33').addEventListener('click',runGame,false);
+document.getElementById('box34').addEventListener('click',runGame,false);
+document.getElementById('box35').addEventListener('click',runGame,false);
+document.getElementById('box36').addEventListener('click',runGame,false);
+document.getElementById('box40').addEventListener('click',runGame,false);
+document.getElementById('box41').addEventListener('click',runGame,false);
+document.getElementById('box42').addEventListener('click',runGame,false);
+document.getElementById('box43').addEventListener('click',runGame,false);
+document.getElementById('box44').addEventListener('click',runGame,false);
+document.getElementById('box45').addEventListener('click',runGame,false);
+document.getElementById('box46').addEventListener('click',runGame,false);
+document.getElementById('box50').addEventListener('click',runGame,false);
+document.getElementById('box51').addEventListener('click',runGame,false);
+document.getElementById('box52').addEventListener('click',runGame,false);
+document.getElementById('box53').addEventListener('click',runGame,false);
+document.getElementById('box54').addEventListener('click',runGame,false);
+document.getElementById('box55').addEventListener('click',runGame,false);
+document.getElementById('box56').addEventListener('click',runGame,false);
 
 document.getElementById('replay').addEventListener('click',resetGame,false);
