@@ -20,19 +20,23 @@ body {
 	font-family: Sans-Serif;
 }
 
+a {
+	font-size: 14pt;
+	color: #000033;
+	font-weight: bold;
+}
+
+a:hover {
+	color: #009900;
+}
+
 p.head {
 	text-align: center;
 	margin: 0.1cm;
 }
 
-a {
+p.head a {
 	font-size: 20pt;
-	font-weight: bold;
-	color: #000033;
-}
-
-a:hover {
-	color: #009900;
 }
 
 h1 {
@@ -88,4 +92,13 @@ p.end {
 p.poem {
 	margin: 0.25cm 1.5cm;
 	font-style: italic;
+}
+
+ul {
+	font-size: 14pt;
+}
+
+.imwrapper {
+	text-align: center;
+	margin: 0.2cm auto;
 }

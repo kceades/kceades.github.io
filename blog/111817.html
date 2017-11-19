@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang='en-US'>
+
+
+
+<head>
+
+
+<title>kceades: Making a Logo with Python</title>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<link rel='stylesheet' href='../styles/story.css'>
+<link rel='shortcut icon' type='image/x-icon' href='../images/logo.png'>
+
+
+</head>
+
+
+
+<body>
+
+
+
+<p class='head'><a href='../blog.html'>Back to the Blog</a></p>
+
+
+<h1>November 18, 2017: Making a Logo with Python</h1>
+
+<p>If you happened to see my old logo and maybe view it at a larger size, you might have seen that I was trying to do something neat with 'kceades' in the center of a paint stripe-esque circle with increasing width. Here it is again for clarity.</p>
+
+<div class='imwrapper'>
+<img src='../images/old_logo.png' alt='My old logo'>
+</div>
+
+<p>Unfortunately, this was not showing up well at all in the browser. So I decided to make a new logo, and to do it in Python using rgba arrays and converting to an image at the end. Using rgba arrays is nice for logos especially because you can set the transparency down to zero where you don't want just annoying white or black outside the logo.</p>
+
+<p>After some more exploring the interwebs and playing around with a lot of array values, I found a couple tips that might be useful to know for someone attempting to modify this script in the future.</p>
+
+<ul>
+	<li>The module/function I found most suitable was matplotlib.image.imsave</li>
+	<li>When initializing the array, add the argument string 'uint8' to the array to make it more suitable to being saved as an image.</li>
+	<li>Lastly, the imsave function apparently normalizing over the values you have in your arrays, which wasn't an issue for me since I wound up making a gradient spanning the full 0-255 range of rgb values.</li>
+	<li>Most important, the a value for transparency is <i>also</i> scaled to the min-max ranges of your rgb values, so if you are using the full range, 0 would be transparent while 255 would be fully solid.</li>
+</ul>
+
+<p>Now, for my actual logo, I chose a gradient in color with three random walks in it with different probabilities. The red one 0.6 probability of moving upward on a given step while green is 0.5 and blue is 0.4. Well, without further ado, here is my new logo in case it was not clear in the browser (it is double size here).</p>
+
+<div class='imwrapper'>
+<img src='../images/logo.png' alt='My new logo'>
+</div>
+
+<p>If you want to see the code for any of this, feel free to browse my github repo corresponding to my static site, specifically <a href='https://github.com/kceades/kceades.github.io/tree/master/images'>this folder</a> and look at the <i>logo.py</i> file.</p>
+
+
+
+</body>
+
+
+
+</html>

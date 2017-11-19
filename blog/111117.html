@@ -39,7 +39,7 @@
 
 <p>var y = x;</p>
 
-<p>Here, JavaScript thinks you clearly just want to reference the memory location of x, so any changes you make to y, you also make to x. This is in contrast to Python, where it makes the seemingly more natural assumption that you want to just use the values and make a copy.</p>
+<p>Here, JavaScript, like many languages, thinks you want to copy the references for some reason, which has always seemed unnatural to me. In Python, something like y=np.copy(x) works, but with nested arrays in JavaScript, you have to loop through the arrays. At least for singly nested arrays like the one above, a solution is fairly straightforward.</p>
 
 <p>The solution I found on the interwebs that worked for me is</p>
 
