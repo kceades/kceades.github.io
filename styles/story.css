@@ -18,25 +18,23 @@ body {
 	height: 100%;
 	background-color: white;
 	font-family: Sans-Serif;
+	text-align: justify;
 }
 
-a {
-	font-size: 14pt;
-	color: #000033;
+a.nav {
+	display: block;
+	width: 100%;
+	padding: 0.25cm 0 0.25cm 0.25cm;
+	margin: 0;
+	font-size: 16pt;
+	color: #bfbfbf;
+	background-color: #0d6c8c;
+	text-decoration: none;
 	font-weight: bold;
 }
 
-a:hover {
-	color: #009900;
-}
-
-p.head {
-	text-align: center;
-	margin: 0.1cm;
-}
-
-p.head a {
-	font-size: 20pt;
+a.nav:hover {
+	color: white;
 }
 
 h1 {
@@ -44,8 +42,8 @@ h1 {
 	font-size: 22pt;
 	color: black;
 	text-align: center;
-	margin: 1cm auto;
-
+	margin: 0.5cm auto;
+	font-style: italic;
 }
 
 h3 {
@@ -53,20 +51,19 @@ h3 {
 	font-size: 18pt;
 	color: black;
 	text-align: left;
-	margin: 0.5cm 0 0.5cm 1cm;
+	margin: 0.5cm 0 0.5cm 0.5cm;
 }
 
 p {
 	color: black;
 	font-size: 14pt;
 	text-align: justify;
-	margin: 0.25cm 0.5cm 0.25cm 0.5cm;
+	margin: 0.25cm 1cm 0.25cm 1cm;
 }
 
 p.dots {
 	text-align: center;
-	margin-top: 0.5cm;
-	margin-bottom: 0.5cm;
+	margin: 0.75cm 1cm 0.75cm 1cm;
 }
 
 p.left {
@@ -92,13 +89,4 @@ p.end {
 p.poem {
 	margin: 0.25cm 1.5cm;
 	font-style: italic;
-}
-
-ul {
-	font-size: 14pt;
-}
-
-.imwrapper {
-	text-align: center;
-	margin: 0.2cm auto;
 }

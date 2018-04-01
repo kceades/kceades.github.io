@@ -10,7 +10,7 @@
 <title>kceades: Quick Comments on JavaScript</title>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1'>
-<link rel='stylesheet' href='../styles/story.css'>
+<link rel='stylesheet' href='../styles/blog.css'>
 <link rel='shortcut icon' type='image/x-icon' href='../images/logo.png'>
 
 
@@ -20,10 +20,7 @@
 
 <body>
 
-
-
-<p class='head'><a href='../blog.html'>Back to the Blog</a></p>
-
+<a class='nav' href='../blog.html'>Back to Blog</a>
 
 <h1>November 11, 2017: Quick Comments on JavaScript</h1>
 
@@ -33,25 +30,27 @@
 
 <p>Consider the following example. Set</p>
 
-<p>var x = [[0,1],[1,1],[2,7]];</p>
+<p class='code'>var x = [[0,1],[1,1],[2,7]];</p>
 
 <p>That is, let x be a variable that is a nested array. Now set</p>
 
-<p>var y = x;</p>
+<p class='code'>var y = x;</p>
 
 <p>Here, JavaScript, like many languages, thinks you want to copy the references for some reason, which has always seemed unnatural to me. In Python, something like y=np.copy(x) works, but with nested arrays in JavaScript, you have to loop through the arrays. At least for singly nested arrays like the one above, a solution is fairly straightforward.</p>
 
 <p>The solution I found on the interwebs that worked for me is</p>
 
-<p>var y = x.map(function(arr) {return arr.slice();});</p>
+<p class='code'>var y = x.map(function(arr) {return arr.slice();});</p>
 
 <h3>Lesson 2</h3>
 
 <p>You cannot simply pass an array to Math.min or Math.max. Instead, if x is a non-nested array, then use</p>
 
-<p>var max_x = Math.max.apply(null,x);</p>
+<p class='code'>var max_x = Math.max.apply(null,x);</p>
 
+<p>Until next time, imaginary blog readers.</p>
 
+<a class='nav' href='../blog.html'>Back to Blog</a>
 
 </body>
 

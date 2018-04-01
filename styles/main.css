@@ -133,6 +133,7 @@ body {
 
 .content p {
 	padding: 15px;
+	line-height: 140%;
 }
 
 .content a.normal {
